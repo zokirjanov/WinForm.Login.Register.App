@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsForms.Domain
+namespace WindowsForms.DataAccess.Interfaces
 {
-    public class Class1
-    {
-    }
+	public interface IDataBaseCreate
+	{
+		Task<bool> CreateDataBaseAsync();
+	}
 }
