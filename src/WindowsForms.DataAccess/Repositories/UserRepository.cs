@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsForms.DataAccess.Constants;
 using WindowsForms.DataAccess.Interfaces.IRepositories;
 using WindowsForms.Domain.Models;
+
 
 namespace WindowsForms.DataAccess.Repositories
 {
@@ -16,7 +18,6 @@ namespace WindowsForms.DataAccess.Repositories
 
 		public async Task<bool> CreateAsync(User entity)
 		{
-
 			try
 			{
 				await _sqliteConnection.OpenAsync();
