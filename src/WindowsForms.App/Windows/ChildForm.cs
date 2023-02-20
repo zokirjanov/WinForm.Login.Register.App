@@ -1,15 +1,6 @@
-﻿using Guna.UI2.WinForms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
+﻿using System;
 using System.Windows.Forms;
+using WindowsForms.DataAccess.Repositories;
 using WindowsForms.Domain.ViewModels;
 using WindowsForms.Service.Services;
 
@@ -17,6 +8,7 @@ namespace WindowsForms.App.Windows
 {
 	public partial class ChildForm : Form
 	{
+
 		public ChildForm()
 		{
 			InitializeComponent();
@@ -26,7 +18,7 @@ namespace WindowsForms.App.Windows
 
 		private void guna2Button2_Click(object sender, EventArgs e)
 		{
-			if(registerPanel.Visible == false)
+			if (registerPanel.Visible == false)
 			{
 				registerPanel.Visible = true;
 				loginPanel.Visible = false;
@@ -35,7 +27,7 @@ namespace WindowsForms.App.Windows
 
 		private void guna2Button1_Click(object sender, EventArgs e)
 		{
-			if(registerPanel.Visible == true)
+			if (registerPanel.Visible == true)
 			{
 				registerPanel.Visible = false;
 				loginPanel.Visible = true;
@@ -44,7 +36,7 @@ namespace WindowsForms.App.Windows
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			if(loginPassword.PasswordChar == '●')
+			if (loginPassword.PasswordChar == '●')
 			{
 				button3.BringToFront();
 				loginPassword.PasswordChar = '\0';
@@ -82,7 +74,7 @@ namespace WindowsForms.App.Windows
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-			if(registerPassword.PasswordChar == '●')
+			if (registerPassword.PasswordChar == '●')
 			{
 				button5.BringToFront();
 				registerPassword.PasswordChar = '\0';
@@ -98,10 +90,13 @@ namespace WindowsForms.App.Windows
 			}
 		}
 
+		Repository repository = new Repository();
+
 		private async void guna2GradientButton2_Click(object sender, EventArgs e)
 		{
 			try
-			{
+			{	
+				repository.Initialize();
 				if (registerPassword.Text.Length > 7)
 				{
 					if (registerPassword.Text == registerConfirm.Text)
@@ -109,7 +104,7 @@ namespace WindowsForms.App.Windows
 						UserViewModel userViewModel = new UserViewModel(registerLogin.Text, registerPassword.Text);
 						UserServise userServise = new UserServise();
 						var result = await userServise.RegistrationAsync(userViewModel);
-						
+
 						if (result.IsSuccesful)
 						{
 							MessageBox.Show("You are registered succesfully");
@@ -140,7 +135,6 @@ namespace WindowsForms.App.Windows
 		{
 			Form1 form = new Form1();
 			form.Show();
-			
 		}
 	}
 }
