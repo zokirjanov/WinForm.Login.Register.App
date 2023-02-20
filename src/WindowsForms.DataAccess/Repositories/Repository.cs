@@ -1,9 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WindowsForms.DataAccess.Constants;
 using WindowsForms.DataAccess.Interfaces.IRepositories;
@@ -17,21 +14,11 @@ namespace WindowsForms.DataAccess.Repositories
 
 		public Repository()
 		{
-			Users= new UserRepository();
+			Users = new UserRepository();
 		}
-
-		private bool DataBaseExists()
-		{
-			string file = DbConstants.DB_Path_File.Split()[1];
-			return new FileInfo(file).Exists;
-		}
-
 		public async void Initialize()
 		{
-			if (!DataBaseExists())
-			{
 				await CreateDataBaseAsync();
-			}
 		}
 
 		private async Task<bool> CreateDataBaseAsync()
@@ -45,7 +32,7 @@ namespace WindowsForms.DataAccess.Repositories
 				Directory.CreateDirectory(dirpath);
 				File.WriteAllText(filepath, "");
 				await _sqliteConnection.OpenAsync();
-				string query = "CREATE TABLE users (id INTEGER PRIMARY KEY, login TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL , salt TEXT NOT NULL;)";
+				string query = "CREATE TABLE users (id INTEGER PRIMARY KEY, Login TEXT NOT NULL UNIQUE, PasswordHash TEXT NOT NULL , Salt TEXT NOT NULL;)";
 				SqliteCommand command = new SqliteCommand(query, _sqliteConnection);
 				var result = await command.ExecuteNonQueryAsync();
 				if (result == 0)
@@ -60,8 +47,9 @@ namespace WindowsForms.DataAccess.Repositories
 			}
 			finally
 			{
-				 _sqliteConnection.Close();
+				_sqliteConnection.Close();
 			}
 		}
 	}
+
 }

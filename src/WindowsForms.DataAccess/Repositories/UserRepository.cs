@@ -1,9 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using WindowsForms.DataAccess.Constants;
 using WindowsForms.DataAccess.Interfaces.IRepositories;
@@ -21,15 +17,15 @@ namespace WindowsForms.DataAccess.Repositories
 			try
 			{
 				await _sqliteConnection.OpenAsync();
-				string query = "insert into users(login,password_hash,salt) " +
-					"values (@login,@password_hash,@salt);";
+				string query = "insert into users(Login,PasswordHash,Salt) " +
+					"values (@Login,@PasswordHash,@Salt);";
 				SqliteCommand command = new SqliteCommand(query, _sqliteConnection)
 				{
 					Parameters =
 					{
-						new SqliteParameter("login",entity.Login),
-						new SqliteParameter("password_hash",entity.PasswordHash),
-						new SqliteParameter("salt",entity.Salt)
+						new SqliteParameter("Login",entity.Login),
+						new SqliteParameter("PasswordHash",entity.PasswordHash),
+						new SqliteParameter("Salt",entity.Salt)
 					}
 				};
 				var result = await command.ExecuteNonQueryAsync();
@@ -42,7 +38,7 @@ namespace WindowsForms.DataAccess.Repositories
 			}
 			finally
 			{
-				 _sqliteConnection.Close();
+				_sqliteConnection.Close();
 			}
 		}
 
@@ -51,7 +47,7 @@ namespace WindowsForms.DataAccess.Repositories
 			try
 			{
 				await _sqliteConnection.OpenAsync();
-				string query = $"select * from users where login ='{login}';";
+				string query = $"select * from users where Login ='{login}';";
 				SqliteCommand command = new SqliteCommand(query, _sqliteConnection);
 				var readly = await command.ExecuteReaderAsync();
 				if (await readly.ReadAsync())
@@ -98,7 +94,7 @@ namespace WindowsForms.DataAccess.Repositories
 			}
 			finally
 			{
-				 _sqliteConnection.Close();
+				_sqliteConnection.Close();
 			}
 		}
 
