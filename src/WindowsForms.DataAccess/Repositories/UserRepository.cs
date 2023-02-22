@@ -1,36 +1,36 @@
-﻿using Microsoft.Data.Sqlite;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WindowsForms.DataAccess.Constants;
 using WindowsForms.DataAccess.Interfaces.IRepositories;
 using WindowsForms.Domain.Models;
+using System.Data.SQLite;
+
+
 
 
 namespace WindowsForms.DataAccess.Repositories
 {
 	public class UserRepository : IUserRepository
 	{
-		private readonly SqliteConnection _sqliteConnection = new SqliteConnection(DbConstants.DB_Path_File);
-
+		private readonly SQLiteConnection _con = new SQLiteConnection(DbConstants.CONNECTION_STRING);
 		public async Task<bool> CreateAsync(User entity)
 		{
 			try
 			{
-				await _sqliteConnection.OpenAsync();
+				await _con.OpenAsync();
 				string query = "insert into users(Login,PasswordHash,Salt) " +
 					"values (@Login,@PasswordHash,@Salt);";
-				SqliteCommand command = new SqliteCommand(query, _sqliteConnection)
+				SQLiteCommand command = new SQLiteCommand(query, _con)
 				{
 					Parameters =
 					{
-						new SqliteParameter("Login",entity.Login),
-						new SqliteParameter("PasswordHash",entity.PasswordHash),
-						new SqliteParameter("Salt",entity.Salt)
+						new SQLiteParameter("Login",entity.Login),
+						new SQLiteParameter("PasswordHash",entity.PasswordHash),
+						new SQLiteParameter("Salt",entity.Salt)
 					}
 				};
 				var result = await command.ExecuteNonQueryAsync();
 				if (result == 0) return false; else return true;
-
 			}
 			catch
 			{
@@ -38,7 +38,7 @@ namespace WindowsForms.DataAccess.Repositories
 			}
 			finally
 			{
-				_sqliteConnection.Close();
+				_con.Close();
 			}
 		}
 
@@ -46,9 +46,9 @@ namespace WindowsForms.DataAccess.Repositories
 		{
 			try
 			{
-				await _sqliteConnection.OpenAsync();
+				await _con.OpenAsync();
 				string query = $"select * from users where Login ='{login}';";
-				SqliteCommand command = new SqliteCommand(query, _sqliteConnection);
+				SQLiteCommand command = new SQLiteCommand(query, _con);
 				var readly = await command.ExecuteReaderAsync();
 				if (await readly.ReadAsync())
 				{
@@ -67,65 +67,18 @@ namespace WindowsForms.DataAccess.Repositories
 			}
 			finally
 			{
-				_sqliteConnection.Close();
+				_con.Close();
 			}
 		}
 
-		public async Task<List<User>> GetAllAsync()
+		public Task<List<User>> GetAllAsync()
 		{
-			try
-			{
-				await _sqliteConnection.OpenAsync();
-				string query = $"select * from users;";
-				SqliteCommand command = new SqliteCommand(query, _sqliteConnection);
-				var readly = await command.ExecuteReaderAsync();
-				List<User> users = new List<User>();
-				while (await readly.ReadAsync())
-				{
-					User user = new User(readly.GetString(1), readly.GetString(2), readly.GetString(3));
-					users.Add(user);
-				}
-				return users;
-
-			}
-			catch
-			{
-				return new List<User>();
-			}
-			finally
-			{
-				_sqliteConnection.Close();
-			}
+			throw new System.NotImplementedException();
 		}
 
-		public async Task<User> GetAsync(int id)
+		public Task<User> GetAsync(int id)
 		{
-			try
-			{
-				await _sqliteConnection.OpenAsync();
-				string query = $"select * from users where id={id};";
-				SqliteCommand command = new SqliteCommand(query, _sqliteConnection);
-				var readly = await command.ExecuteReaderAsync();
-				if (await readly.ReadAsync())
-				{
-					User user = new User(readly.GetString(1), readly.GetString(2), readly.GetString(3));
-					return user;
-				}
-				else
-				{
-					return null;
-				}
-			}
-			catch
-			{
-				return null;
-			}
-			finally
-			{
-				_sqliteConnection.Close();
-			}
-
+			throw new System.NotImplementedException();
 		}
-
 	}
 }
