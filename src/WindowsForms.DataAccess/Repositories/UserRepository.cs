@@ -38,7 +38,7 @@ namespace WindowsForms.DataAccess.Repositories
 			}
 			finally
 			{
-
+				_con.Close();
 			}
 		}
 
@@ -64,6 +64,10 @@ namespace WindowsForms.DataAccess.Repositories
 			catch
 			{
 				return null;
+			}
+			finally
+			{
+				_con.Close();
 			}
 		}
 

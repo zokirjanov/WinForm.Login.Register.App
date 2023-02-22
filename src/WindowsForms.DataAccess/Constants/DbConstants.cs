@@ -6,6 +6,6 @@ namespace WindowsForms.DataAccess.Constants
 {
 	public class DbConstants
 	{
-		public const string CONNECTION_STRING = "Data Source= form-db.sqlite3";
+		public const string CONNECTION_STRING = "Data Source= database.sqlite3";
 	}
 }

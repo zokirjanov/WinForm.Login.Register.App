@@ -29,7 +29,7 @@ namespace WindowsForms.DataAccess.Repositories
 				myConnection = new SQLiteConnection(DbConstants.CONNECTION_STRING);
 				if (!File.Exists(DbConstants.CONNECTION_STRING))
 				{
-					SQLiteConnection.CreateFile("database.sqlite3");
+					//nothing
 				}
 				await myConnection.OpenAsync();
 				string query = "CREATE TABLE users (Id INTEGER PRIMARY KEY , Login TEXT NOT NULL,  PasswordHash TEXT NOT NULL  ,  Salt TEXT NOT NULL )";

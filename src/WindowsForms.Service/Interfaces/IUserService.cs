@@ -9,7 +9,7 @@ namespace WindowsForms.Service.Interfaces
 {
 	public interface IUserService
 	{
-		Task<(bool IsSuccesful, string Message)> RegistrationAsync(UserViewModel userCreateViewModel);
+		Task<bool> RegistrationAsync(UserViewModel userCreateViewModel);
 		Task<(bool IsSuccesful, string Message)> LoginAsync(string login, string password);
 	}
 }

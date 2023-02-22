@@ -36,13 +36,13 @@ namespace WindowsForms.Service.Services
 			else return (IsSuccessful: false, Message: "Invalid Password");
 		}
 
-		public async Task<(bool IsSuccesful, string Message)> RegistrationAsync(UserViewModel userCreateViewModel)
+		public async Task<bool> RegistrationAsync(UserViewModel userCreateViewModel)
 		{
 			var hashresult = Hasher.Hash(userCreateViewModel.Password);
 			User user = new User(userCreateViewModel.Login, hashresult.hash, hashresult.salt);
 			var result = await _repository.CreateAsync(user);
-			if (result) return (IsSuccessful: true, Message: "Successfull");
-			else return (IsSuccesful: false, Message: "This Login already exists");
+			if (result) return true;
+			else return false;
 		}
 	}
 }

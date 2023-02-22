@@ -104,17 +104,27 @@ namespace WindowsForms.App.Windows
 			{
 				Repository repository = new Repository();
 				repository.Initialize();
+				UserRepository repository1 = new UserRepository();
+				User user = await repository1.FindByLoginAsync(registerLogin.Text);
+				if (user.Login == registerLogin.Text)
+				{
+					label5.ForeColor = Color.Red;
+					label5.Text = "Login Already exists";
+				}
+
+
+
 				if (!(registerLogin.Text == "" && registerConfirm.Text == "" && registerPassword.Text == ""))
 				{
 					UserViewModel userViewModel = new UserViewModel(registerLogin.Text, registerPassword.Text);
 					UserServise userServise = new UserServise();
 					var result = await userServise.RegistrationAsync(userViewModel);
 
-					if (result.IsSuccesful)
+					if (result)
 					{
 						MessageBox.Show("You are registered succesfully");
-						registerPanel.Visible = false;
 						loginPanel.Visible = true;
+						registerPanel.Visible = false;
 					}
 					else MessageBox.Show("Login is already exists");
 				}
@@ -126,17 +136,12 @@ namespace WindowsForms.App.Windows
 			}
 			finally
 			{
-				registerLogin.Text = "";
-				registerPassword.Text = "";
-				registerConfirm.Text = "";
 			}
 		}
 
 		private void guna2GradientButton1_Click(object sender, EventArgs e)
 		{
-			Form1 form = new Form1();
-			form.Show();
-
+			
 		}
 
 		// Validate username
@@ -198,10 +203,9 @@ namespace WindowsForms.App.Windows
 			}
 		}
 
-		private void registerLogin_TextChanged(object sender, EventArgs e)
+		private async void registerLogin_TextChanged(object sender, EventArgs e)
 		{
 			var hasMinimum8Chars = new Regex(@".{8,50}");
-
 			if (!hasMinimum8Chars.IsMatch(registerLogin.Text))
 			{
 				label5.ForeColor = Color.Red;
@@ -211,7 +215,6 @@ namespace WindowsForms.App.Windows
 			{
 				label5.Text = "";
 			}
-
 		}
 
 		private void ChildForm_Load(object sender, EventArgs e)
