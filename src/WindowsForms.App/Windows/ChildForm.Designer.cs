@@ -31,6 +31,8 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChildForm));
 			this.registerPanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
@@ -47,13 +49,11 @@
 			this.guna2GradientButton1 = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
 			this.LoginTb = new Guna.UI2.WinForms.Guna2TextBox();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.loginCheckBox = new System.Windows.Forms.CheckBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.loginPassword = new Guna.UI2.WinForms.Guna2TextBox();
 			this.button3 = new System.Windows.Forms.Button();
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-			this.label3 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
 			this.registerPanel.SuspendLayout();
 			this.loginPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -87,6 +87,22 @@
 			this.registerPanel.Size = new System.Drawing.Size(423, 586);
 			this.registerPanel.TabIndex = 8;
 			this.registerPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.registerPanel_Paint);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(48, 208);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(0, 16);
+			this.label5.TabIndex = 31;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(51, 342);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(0, 16);
+			this.label3.TabIndex = 30;
 			// 
 			// label4
 			// 
@@ -271,7 +287,7 @@
 			this.loginPanel.Controls.Add(this.guna2GradientButton1);
 			this.loginPanel.Controls.Add(this.guna2Button2);
 			this.loginPanel.Controls.Add(this.LoginTb);
-			this.loginPanel.Controls.Add(this.checkBox1);
+			this.loginPanel.Controls.Add(this.loginCheckBox);
 			this.loginPanel.Controls.Add(this.button1);
 			this.loginPanel.Controls.Add(this.loginPassword);
 			this.loginPanel.Controls.Add(this.button3);
@@ -355,15 +371,15 @@
 			this.LoginTb.Size = new System.Drawing.Size(341, 40);
 			this.LoginTb.TabIndex = 12;
 			// 
-			// checkBox1
+			// loginCheckBox
 			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(45, 314);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(98, 20);
-			this.checkBox1.TabIndex = 14;
-			this.checkBox1.Text = "Remind me";
-			this.checkBox1.UseVisualStyleBackColor = true;
+			this.loginCheckBox.AutoSize = true;
+			this.loginCheckBox.Location = new System.Drawing.Point(45, 314);
+			this.loginCheckBox.Name = "loginCheckBox";
+			this.loginCheckBox.Size = new System.Drawing.Size(98, 20);
+			this.loginCheckBox.TabIndex = 14;
+			this.loginCheckBox.Text = "Remind me";
+			this.loginCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// button1
 			// 
@@ -416,22 +432,6 @@
 			// 
 			this.errorProvider1.ContainerControl = this;
 			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(51, 342);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(0, 16);
-			this.label3.TabIndex = 30;
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(48, 208);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(0, 16);
-			this.label5.TabIndex = 31;
-			// 
 			// ChildForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -461,7 +461,7 @@
 		private Guna.UI2.WinForms.Guna2ShadowPanel registerPanel;
 		private Guna.UI2.WinForms.Guna2ShadowPanel loginPanel;
 		private Guna.UI2.WinForms.Guna2TextBox LoginTb;
-		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox loginCheckBox;
 		private Guna.UI2.WinForms.Guna2TextBox loginPassword;
 		private Guna.UI2.WinForms.Guna2Button guna2Button2;
 		private Guna.UI2.WinForms.Guna2Button guna2Button1;

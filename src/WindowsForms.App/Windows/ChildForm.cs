@@ -7,13 +7,14 @@ using WindowsForms.Domain.ViewModels;
 using WindowsForms.Service.Services;
 using WindowsForms.Domain.Models;
 using SQLite;
-
+using WindowsForms.Service.Common.Helpers;
+using System.IO;
 
 namespace WindowsForms.App.Windows
 {
 	public partial class ChildForm : Form
 	{
-
+		Repository repository = new Repository();
 		public ChildForm()
 		{
 			InitializeComponent();
@@ -25,6 +26,11 @@ namespace WindowsForms.App.Windows
 		{
 			if (registerPanel.Visible == false)
 			{
+
+				registerPassword.Text = "";
+				registerConfirm.Text = "";
+				label4.Text = "";
+				label3.Text = "";
 				registerPanel.Visible = true;
 				loginPanel.Visible = false;
 				registerLogin.Focus();
@@ -96,52 +102,114 @@ namespace WindowsForms.App.Windows
 			}
 		}
 
-		Repository repository = new Repository();
 
+		// Register
 		private async void guna2GradientButton2_Click(object sender, EventArgs e)
 		{
 			try
 			{
 				Repository repository = new Repository();
 				repository.Initialize();
+
 				UserRepository repository1 = new UserRepository();
-				User user = await repository1.FindByLoginAsync(registerLogin.Text);
-				if (user.Login == registerLogin.Text)
+				var user = await repository1.FindByLoginAsync(registerLogin.Text);
+				if (user == null)
 				{
-					label5.ForeColor = Color.Red;
-					label5.Text = "Login Already exists";
-				}
-
-
-
-				if (!(registerLogin.Text == "" && registerConfirm.Text == "" && registerPassword.Text == ""))
-				{
-					UserViewModel userViewModel = new UserViewModel(registerLogin.Text, registerPassword.Text);
-					UserServise userServise = new UserServise();
-					var result = await userServise.RegistrationAsync(userViewModel);
-
-					if (result)
+					if ((label4.Text == "" && label3.Text == "" && label5.Text == ""))
 					{
-						MessageBox.Show("You are registered succesfully");
-						loginPanel.Visible = true;
-						registerPanel.Visible = false;
+						UserViewModel userViewModel = new UserViewModel(registerLogin.Text, registerPassword.Text);
+						UserServise userServise = new UserServise();
+						var result = await userServise.RegistrationAsync(userViewModel);
+
+						if (result)
+						{
+							MessageBox.Show("You are registered succesfully");
+							loginPassword.Text = registerConfirm.Text;
+							LoginTb.Text = registerLogin.Text;
+							loginPanel.Visible = true;
+							registerPanel.Visible = false;
+						}
+						else MessageBox.Show("Login is already exists");
 					}
-					else MessageBox.Show("Login is already exists");
+					else MessageBox.Show("Fill the all boxes correctly");
 				}
-				else MessageBox.Show("Fill the all boxes");
+				else
+				{
+					MessageBox.Show("Login already exists, please try another login");
+					registerLogin.Text = "";
+				}
 			}
 			catch
 			{
 				MessageBox.Show("Something went wrong");
 			}
-			finally
-			{
-			}
 		}
 
-		private void guna2GradientButton1_Click(object sender, EventArgs e)
+
+		// Login
+		private async void guna2GradientButton1_Click(object sender, EventArgs e)
 		{
-			
+			try
+			{
+				if (loginCheckBox.Checked)
+				{
+					UserRepository repository1 = new UserRepository();
+					var user = await repository1.FindByLoginAsync(LoginTb.Text);
+					if (user == null)
+					{
+						MessageBox.Show("Login Does not exists");
+					}
+					else
+					{
+						UserViewModel userViewModel = new UserViewModel(LoginTb.Text, loginPassword.Text);
+						UserServise userServise = new UserServise();
+						var result = await userServise.LoginAsync(userViewModel.Login, userViewModel.Password);
+						if (!result.IsSuccesful)
+						{
+							MessageBox.Show(result.Message);
+						}
+						else
+						{
+							string path = "database.txt";
+							File.WriteAllText(path, LoginTb.Text + ":" + loginPassword.Text);
+							Form1 form = new Form1();
+							form.Show();
+
+						}
+					}
+				}
+				else
+				{
+					UserRepository repository1 = new UserRepository();
+					var user = await repository1.FindByLoginAsync(LoginTb.Text);
+					if (user == null)
+					{
+						MessageBox.Show("Login Does not exists");
+					}
+					else
+					{
+						UserViewModel userViewModel = new UserViewModel(LoginTb.Text, loginPassword.Text);
+						UserServise userServise = new UserServise();
+						var result = await userServise.LoginAsync(userViewModel.Login, userViewModel.Password);
+						if (!result.IsSuccesful)
+						{
+							MessageBox.Show(result.Message);
+						}
+						else
+						{
+							Form1 form = new Form1();
+							form.Show();
+
+						}
+					}
+				}
+
+
+			}
+			catch
+			{
+				MessageBox.Show("Something went wrong");
+			}
 		}
 
 		// Validate username
@@ -229,6 +297,11 @@ namespace WindowsForms.App.Windows
 				db.CreateTable<User>();
 				db.Close();
 			}
+			string path = "database.txt";
+			var result = File.ReadAllText(path);
+			string[] tokens = result.Split(':');
+			LoginTb.Text = tokens[0];
+			loginPassword.Text = tokens[1];
 		}
 	}
 }

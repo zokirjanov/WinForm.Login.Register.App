@@ -6,8 +6,6 @@ using WindowsForms.Domain.Models;
 using System.Data.SQLite;
 
 
-
-
 namespace WindowsForms.DataAccess.Repositories
 {
 	public class UserRepository : IUserRepository
@@ -47,13 +45,27 @@ namespace WindowsForms.DataAccess.Repositories
 			try
 			{
 				await _con.OpenAsync();
-				string query = $"select * from users where Login ='{login}';";
-				SQLiteCommand command = new SQLiteCommand(query, _con);
-				var readly = await command.ExecuteReaderAsync();
-				if (await readly.ReadAsync())
+				string query = $"select * from users where Login = $login";
+				SQLiteCommand command = new SQLiteCommand(query, _con)
 				{
-					User user = new User(readly.GetString(1), readly.GetString(2), readly.GetString(3));
-					user.Id = readly.GetInt32(0);
+					Parameters =
+					{
+						new SQLiteParameter("Login", login)
+					}
+				};
+
+				var reader = await command.ExecuteReaderAsync();
+
+				if (await reader.ReadAsync())
+				{
+					var user = new User() 
+					{
+
+						Id= reader.GetInt32(0), 
+						Login = reader.GetString(1), 
+						PasswordHash = reader.GetString(2),
+						Salt = reader.GetString(3)
+					};
 					return user;
 				}
 				else
