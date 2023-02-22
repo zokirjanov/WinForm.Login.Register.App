@@ -1,9 +1,9 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using WindowsForms.DataAccess.Constants;
 using WindowsForms.DataAccess.Interfaces.IRepositories;
+using System.Data.SQLite;
+
 
 namespace WindowsForms.DataAccess.Repositories
 {
@@ -11,6 +11,7 @@ namespace WindowsForms.DataAccess.Repositories
 	{
 
 		public IUserRepository Users { get; set; }
+		public SQLiteConnection myConnection;
 
 		public Repository()
 		{
@@ -18,28 +19,27 @@ namespace WindowsForms.DataAccess.Repositories
 		}
 		public async void Initialize()
 		{
-				await CreateDataBaseAsync();
+			await CreateDataBaseAsync();
 		}
 
 		private async Task<bool> CreateDataBaseAsync()
 		{
-			SqliteConnection _sqliteConnection = new SqliteConnection(DbConstants.DB_Path_File);
 			try
 			{
-				string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-				string dirpath = path + "\\WinForm";
-				string filepath = dirpath + "\\winform-app.db";
-				Directory.CreateDirectory(dirpath);
-				File.WriteAllText(filepath, "");
-				await _sqliteConnection.OpenAsync();
-				string query = "CREATE TABLE users (id INTEGER PRIMARY KEY, Login TEXT NOT NULL UNIQUE, PasswordHash TEXT NOT NULL , Salt TEXT NOT NULL;)";
-				SqliteCommand command = new SqliteCommand(query, _sqliteConnection);
-				var result = await command.ExecuteNonQueryAsync();
+				myConnection = new SQLiteConnection(DbConstants.CONNECTION_STRING);
+				if (!File.Exists(DbConstants.CONNECTION_STRING))
+				{
+					SQLiteConnection.CreateFile("database.sqlite3");
+				}
+				await myConnection.OpenAsync();
+				string query = "CREATE TABLE users (Id INTEGER PRIMARY KEY , Login TEXT NOT NULL,  PasswordHash TEXT NOT NULL  ,  Salt TEXT NOT NULL )";
+				SQLiteCommand sQLiteCommand = new SQLiteCommand(query, myConnection);
+				var result = await sQLiteCommand.ExecuteNonQueryAsync();
 				if (result == 0)
+				{
 					return false;
-				else
-					return true;
-
+				}
+				else return false;
 			}
 			catch
 			{
@@ -47,7 +47,7 @@ namespace WindowsForms.DataAccess.Repositories
 			}
 			finally
 			{
-				_sqliteConnection.Close();
+				myConnection.Close();
 			}
 		}
 	}

@@ -28,8 +28,10 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChildForm));
 			this.registerPanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
+			this.label4 = new System.Windows.Forms.Label();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
@@ -44,19 +46,26 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.guna2GradientButton1 = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-			this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
+			this.LoginTb = new Guna.UI2.WinForms.Guna2TextBox();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.loginPassword = new Guna.UI2.WinForms.Guna2TextBox();
 			this.button3 = new System.Windows.Forms.Button();
+			this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+			this.label3 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
 			this.registerPanel.SuspendLayout();
 			this.loginPanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// registerPanel
 			// 
 			this.registerPanel.AutoScroll = true;
 			this.registerPanel.BackColor = System.Drawing.Color.Transparent;
+			this.registerPanel.Controls.Add(this.label5);
+			this.registerPanel.Controls.Add(this.label3);
+			this.registerPanel.Controls.Add(this.label4);
 			this.registerPanel.Controls.Add(this.button6);
 			this.registerPanel.Controls.Add(this.button5);
 			this.registerPanel.Controls.Add(this.button2);
@@ -77,6 +86,15 @@
 			this.registerPanel.ShadowShift = 10;
 			this.registerPanel.Size = new System.Drawing.Size(423, 586);
 			this.registerPanel.TabIndex = 8;
+			this.registerPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.registerPanel_Paint);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(50, 275);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(0, 16);
+			this.label4.TabIndex = 29;
 			// 
 			// button6
 			// 
@@ -182,6 +200,8 @@
 			this.registerLogin.SelectedText = "";
 			this.registerLogin.Size = new System.Drawing.Size(341, 40);
 			this.registerLogin.TabIndex = 16;
+			this.registerLogin.TextChanged += new System.EventHandler(this.registerLogin_TextChanged);
+			this.registerLogin.Validating += new System.ComponentModel.CancelEventHandler(this.login_validating);
 			// 
 			// registerPassword
 			// 
@@ -205,6 +225,7 @@
 			this.registerPassword.SelectedText = "";
 			this.registerPassword.Size = new System.Drawing.Size(341, 40);
 			this.registerPassword.TabIndex = 17;
+			this.registerPassword.TextChanged += new System.EventHandler(this.registerPassword_TextChanged);
 			// 
 			// button4
 			// 
@@ -240,6 +261,7 @@
 			this.registerConfirm.SelectedText = "";
 			this.registerConfirm.Size = new System.Drawing.Size(341, 40);
 			this.registerConfirm.TabIndex = 20;
+			this.registerConfirm.TextChanged += new System.EventHandler(this.registerConfirm_TextChanged_1);
 			// 
 			// loginPanel
 			// 
@@ -248,7 +270,7 @@
 			this.loginPanel.Controls.Add(this.label1);
 			this.loginPanel.Controls.Add(this.guna2GradientButton1);
 			this.loginPanel.Controls.Add(this.guna2Button2);
-			this.loginPanel.Controls.Add(this.guna2TextBox1);
+			this.loginPanel.Controls.Add(this.LoginTb);
 			this.loginPanel.Controls.Add(this.checkBox1);
 			this.loginPanel.Controls.Add(this.button1);
 			this.loginPanel.Controls.Add(this.loginPassword);
@@ -310,28 +332,28 @@
 			this.guna2Button2.Text = "Sign Up -->";
 			this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
 			// 
-			// guna2TextBox1
+			// LoginTb
 			// 
-			this.guna2TextBox1.BorderRadius = 5;
-			this.guna2TextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.guna2TextBox1.DefaultText = "";
-			this.guna2TextBox1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-			this.guna2TextBox1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-			this.guna2TextBox1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.guna2TextBox1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.guna2TextBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.guna2TextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.guna2TextBox1.ForeColor = System.Drawing.Color.Black;
-			this.guna2TextBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.guna2TextBox1.IconLeft = ((System.Drawing.Image)(resources.GetObject("guna2TextBox1.IconLeft")));
-			this.guna2TextBox1.Location = new System.Drawing.Point(40, 194);
-			this.guna2TextBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.guna2TextBox1.Name = "guna2TextBox1";
-			this.guna2TextBox1.PasswordChar = '\0';
-			this.guna2TextBox1.PlaceholderText = "Username";
-			this.guna2TextBox1.SelectedText = "";
-			this.guna2TextBox1.Size = new System.Drawing.Size(341, 40);
-			this.guna2TextBox1.TabIndex = 12;
+			this.LoginTb.BorderRadius = 5;
+			this.LoginTb.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.LoginTb.DefaultText = "";
+			this.LoginTb.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.LoginTb.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.LoginTb.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.LoginTb.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.LoginTb.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.LoginTb.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.LoginTb.ForeColor = System.Drawing.Color.Black;
+			this.LoginTb.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.LoginTb.IconLeft = ((System.Drawing.Image)(resources.GetObject("LoginTb.IconLeft")));
+			this.LoginTb.Location = new System.Drawing.Point(40, 194);
+			this.LoginTb.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.LoginTb.Name = "LoginTb";
+			this.LoginTb.PasswordChar = '\0';
+			this.LoginTb.PlaceholderText = "Username";
+			this.LoginTb.SelectedText = "";
+			this.LoginTb.Size = new System.Drawing.Size(341, 40);
+			this.LoginTb.TabIndex = 12;
 			// 
 			// checkBox1
 			// 
@@ -390,6 +412,26 @@
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.button3_Click);
 			// 
+			// errorProvider1
+			// 
+			this.errorProvider1.ContainerControl = this;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(51, 342);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(0, 16);
+			this.label3.TabIndex = 30;
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(48, 208);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(0, 16);
+			this.label5.TabIndex = 31;
+			// 
 			// ChildForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -405,10 +447,12 @@
 			this.Name = "ChildForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "LoginForm";
+			this.Load += new System.EventHandler(this.ChildForm_Load);
 			this.registerPanel.ResumeLayout(false);
 			this.registerPanel.PerformLayout();
 			this.loginPanel.ResumeLayout(false);
 			this.loginPanel.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -416,7 +460,7 @@
 		#endregion
 		private Guna.UI2.WinForms.Guna2ShadowPanel registerPanel;
 		private Guna.UI2.WinForms.Guna2ShadowPanel loginPanel;
-		private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
+		private Guna.UI2.WinForms.Guna2TextBox LoginTb;
 		private System.Windows.Forms.CheckBox checkBox1;
 		private Guna.UI2.WinForms.Guna2TextBox loginPassword;
 		private Guna.UI2.WinForms.Guna2Button guna2Button2;
@@ -434,5 +478,9 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button6;
 		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.ErrorProvider errorProvider1;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label5;
 	}
 }
